@@ -10,6 +10,11 @@
 
 <body>
     @auth
+
+        @if (session('status'))
+            <p class="notice">{{ session('status') }}</p>
+        @endif
+
         <p>Welcome authenticated user.</p>
         <p>You're user id is {{ Auth::id() }}</p>
 
@@ -64,9 +69,21 @@
 
             <form action="{{ route('register') }}" method="post">
                 @csrf
-                <input type="text" name="name" placeholder="Name"><br>
-                <input type="text" name="email" id="" placeholder="Email"><br>
-                <input type="text" name="password" placeholder="Password"><br>
+                <input type="text" name="name" placeholder="Name">
+                @error('name')
+                    <span role="alert">{{ $message }}</span>
+                @enderror <br>
+
+                <input type="text" name="email" id="" placeholder="Email">
+                @error('email')
+                    <span role="alert">{{ $message }}</span>
+                @enderror <br>
+
+                <input type="text" name="password" placeholder="Password">
+                @error('password')
+                    <span role="alert">{{ $message }}</span>
+                @enderror <br>
+
                 <button type="submit">Register</button>
             </form>
 
@@ -77,9 +94,24 @@
 
             <form action="{{ route('login') }}" method="post">
                 @csrf
-                <input type="text" name="login-name" placeholder="Name"><br>
-                <input type="text" name="login-password" placeholder="Password"><br>
-                <button type="submit">Login</button>
+                <input type="text" name="login-name" placeholder="Name">
+
+                @error('login-name')
+                    <span role="alert">{{ $message }}</span>
+                @enderror <br>
+
+                <input type="text" name="login-password" placeholder="Password">
+
+                @error('login-password')
+                    <span role="alert">{{ $message }}</span>
+                @enderror <br>
+
+                <button type="submit">Login</button><br>
+
+                <label for="remember">
+                    <input type="checkbox" id="remember" name="remember"
+                        {{ old('remember') == 'on' ? 'checked' : '' }}>Remember me
+                </label><br>
             </form>
 
         </div>

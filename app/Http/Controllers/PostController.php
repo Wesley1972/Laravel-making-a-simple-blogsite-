@@ -16,7 +16,7 @@ class PostController extends Controller
             $post->delete();
         }
 
-        return redirect('/');
+        return redirect('/')->with('status', 'Post deleted');
     }
 
     public function updatePost(Request $request, Post $post)
@@ -35,7 +35,7 @@ class PostController extends Controller
 
         $post->update($incomingFields);
 
-        return redirect('/');
+        return redirect('/')->with('status', 'Post updated');
     }
 
     public function editPost(Post $post)
@@ -60,6 +60,6 @@ class PostController extends Controller
 
         Post::create($incomingFields);
 
-        return redirect('/');
+        return redirect('/')->with('status', 'Post created');
     }
 }

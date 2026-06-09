@@ -19,7 +19,7 @@ class UserController extends Controller
         if (Auth::attempt([
             'name' => $loginInfo['login-name'],
             'password' => $loginInfo['login-password'],
-        ])) {
+        ], $request->has('remember'))) {
             $request->session()->regenerate();
         }
 
@@ -44,6 +44,6 @@ class UserController extends Controller
         $incomingFields['password'] = bcrypt($incomingFields['password']);
         $user = User::create($incomingFields);
         auth::login($user);
-        return redirect('/');
+        return redirect('/')->with('status', 'Registration successful');
     }
 }
